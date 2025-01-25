@@ -43,6 +43,11 @@ MOS_SID::MOS_SID(MOS_6510 &m6):Mos6510(m6)
 	
 }
 
+MOS_SID::~MOS_SID()
+{
+
+}
+
 //My SID implementation is similar to what I worked out in a SwinSID variant during 3..4 months of development. (So jsSID only took 2 weeks armed with this experience.)
 //I learned the workings of ADSR/WAVE/filter operations mainly from the quite well documented resid and resid-fp codes.
 //(The SID reverse-engineering sites were also good sources.)

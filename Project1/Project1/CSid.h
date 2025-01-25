@@ -8,6 +8,7 @@ class  CSid
 public:
 
 	CSid();
+	~CSid();
 
 	int Init();
 	int LoadFile(char * filePath);

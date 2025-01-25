@@ -7,7 +7,10 @@
 
 CSid::CSid()
 {
+}
 
+CSid::~CSid()
+{
 
 }
 

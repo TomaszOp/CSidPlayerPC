@@ -9,6 +9,7 @@ class MOS_6510
 public:
 	MOS_6510();
 	MOS_6510(RAM & ram);
+	~MOS_6510();
 
 	void initCPU(unsigned int mempos);
 	byte CPU();

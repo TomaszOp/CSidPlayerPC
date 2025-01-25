@@ -34,9 +34,11 @@ class MOS_SID
 public:
 	MOS_SID();
 	MOS_SID(MOS_6510 & m6);
+	~MOS_SID();
 
 	void cSID_init(int samplerate);
 	void initSID();
+
 	int SID(char num, unsigned int baseaddr);
 
 	int mos_round(double d);
