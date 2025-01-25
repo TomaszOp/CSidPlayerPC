@@ -9,6 +9,7 @@ class  RAM
 public:
 	RAM();
 	RAM(byte * _memory);
+	~RAM();
 
 	byte * memory;
 

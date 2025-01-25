@@ -1,14 +1,5 @@
-
 #include "SID_PLAYER.h"
 #include "stdlib.h"
-
-#ifdef _MSC_VER //no sleep and usleep (unistd.h) in M$ Win... need to find an alternative
-void sleep(int x) {}
-void usleep(int x) {}
-#else
-#include <unistd.h>
-#endif
-
 
 SidPlayer::SidPlayer(void)
 {
@@ -58,6 +49,11 @@ SidPlayer::SidPlayer(SidFile &sf, CallbackData &cd) : sidFile(sf), callbackData(
 	callbackData.requested_SID_model = -1;
 }
 
+SidPlayer::~SidPlayer()
+{
+
+}
+
 int SidPlayer::InitSDL()
 {
 	callbackData.MosSid.samplerate = DEFAULT_SAMPLERATE;
@@ -92,7 +88,7 @@ int SidPlayer::InitSDL()
 int SidPlayer::LoadFile(char * filePath)
 { 
 	sidFile.LoadFile(filePath);
-	sidFile.SetCpuMemory(callbackData.MosSid.Mos6510.Ram.memory);
+	sidFile.SetToMemory(callbackData.MosSid.Mos6510.Ram.memory);
 
 	//byte e = Mos6510.Ram.memory[0];
 
@@ -117,7 +113,7 @@ int SidPlayer::LoadFile(char * filePath)
 int SidPlayer::InserFile(char* fileBuffer, unsigned int sidLength)
 {
 	sidFile.InserFile(fileBuffer, sidLength);
-	sidFile.SetCpuMemory(callbackData.MosSid.Mos6510.Ram.memory);
+	sidFile.SetToMemory(callbackData.MosSid.Mos6510.Ram.memory);
 
 	//byte e = Mos6510.Ram.memory[0];
 

@@ -13,7 +13,6 @@ int main(int argc, char* argv[])
 
 	//CSid.InserFile(music_Commando_sid, music_Commando_sid_len);
 
-	CSid.InitSDL();
 	CSid.Play();
 
 	printf("Press Enter to abort playback\n");

@@ -13,11 +13,12 @@ class  SidFile
 public:
 	SidFile();
 	SidFile(RAM & ram);
+	~SidFile();
 
 	int LoadFile(char * filePath);
 	int InserFile(char* fileBuffer, unsigned int sidLength);
-	void SetCpuMemory(byte cpuMemory[]);
-	void SetCpuMemory();
+	void SetToMemory(byte memory[]);
+	void SetToMemory();
 
 	int subtune;
 	//int tunelength;

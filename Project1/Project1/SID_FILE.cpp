@@ -14,29 +14,32 @@ SidFile::SidFile(RAM & ram) : Ram(ram)
 	init();
 }
 
+SidFile::~SidFile()
+{
+	free(filedata);
+}
+
 void SidFile::init()
 {
 	filedata = (byte*)malloc(sizeof(byte) * MAX_DATA_LEN);
 }
 
-void SidFile::SetCpuMemory(byte cpuMemory[])
+void SidFile::SetToMemory(byte memory[])
 {
 	unsigned int i;
 	
 	for (i = 0; i<MAX_DATA_LEN; i++)
-		cpuMemory[i] = 0;
+		memory[i] = 0;
 
 	for (i = offs + 2; i<datalen; i++)
 	{
 		if (loadaddr + i - (offs + 2)<MAX_DATA_LEN)
-			cpuMemory[loadaddr + i - (offs + 2)] = filedata[i];
+			memory[loadaddr + i - (offs + 2)] = filedata[i];
 	}
 }
 
-void SidFile::SetCpuMemory()
+void SidFile::SetToMemory()
 {
-	//SetCpuMemory(Ram.memory);
-
 	unsigned int i;
 
 	for (i = 0; i<MAX_DATA_LEN; i++)
@@ -95,7 +98,6 @@ int SidFile::LoadFile(char * filePath)
 
 	return InserFile((char*)filedata, datalen);
 }
-
 
 int SidFile::InserFile(char* fileBuffer, unsigned int sidLength)
 {

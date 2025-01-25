@@ -62,6 +62,7 @@ class SidPlayer
 	public:
 		SidPlayer();
 		SidPlayer(SidFile &sf, CallbackData &cd);
+		~SidPlayer();
 
 		int LoadFile(char * filePath);
 		int InserFile(char* fileBuffer, unsigned int sidLength);

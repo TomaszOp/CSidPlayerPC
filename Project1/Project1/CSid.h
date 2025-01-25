@@ -12,7 +12,6 @@ public:
 	int Init();
 	int LoadFile(char * filePath);
 	int InserFile(char * fileBuffer, unsigned int sidLength);
-	int InitSDL();
 	int Play();
 	int Stop();
 

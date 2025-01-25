@@ -9,3 +9,8 @@ RAM::RAM(byte* _memory)
 {
 	memory = _memory;
 }
+
+RAM::~RAM()
+{
+	free(memory);
+}

@@ -3,9 +3,7 @@
 
 #include <iostream>
 
-
 #include "CSid.h"
-
 
 CSid::CSid()
 {
@@ -16,6 +14,8 @@ CSid::CSid()
 int CSid::Init()
 {
 	//sidPlayer.callbackData.MosSid = &MosSid;
+
+	sidPlayer.InitSDL();
 
 	return 0;
 }
@@ -28,11 +28,6 @@ int CSid::LoadFile(char * filePath)
 int CSid::InserFile(char* fileBuffer, unsigned int sidLength)
 {
 	return sidPlayer.InserFile(fileBuffer, sidLength);
-}
-
-int CSid::InitSDL()
-{
-	return sidPlayer.InitSDL();
 }
 
 int CSid::Play()
