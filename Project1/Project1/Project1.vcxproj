@@ -142,6 +142,7 @@
     <ClCompile Include="MOS_6510.cpp" />
     <ClCompile Include="MOS_SID.cpp" />
     <ClCompile Include="RAM.cpp" />
+    <ClCompile Include="SDL_Helper.cpp" />
     <ClCompile Include="SID_FILE.cpp" />
     <ClCompile Include="SID_PLAYER.cpp" />
     <ClCompile Include="Tools.cpp" />
@@ -160,6 +161,7 @@
     <ClInclude Include="MOS_6510.h" />
     <ClInclude Include="MOS_SID.h" />
     <ClInclude Include="RAM.h" />
+    <ClInclude Include="SDL_Helper.h" />
     <ClInclude Include="SID_FILE.h" />
     <ClInclude Include="SID_PLAYER.h" />
     <ClInclude Include="Tools.h" />

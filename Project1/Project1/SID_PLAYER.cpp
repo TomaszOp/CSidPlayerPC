@@ -62,26 +62,27 @@ int SidPlayer::InitSDL()
 {
 	callbackData.MosSid.samplerate = DEFAULT_SAMPLERATE;
 	callbackData.sampleratio = callbackData.MosSid.mos_round(C64_PAL_CPUCLK / callbackData.MosSid.samplerate);
-	if (SDL_Init(SDL_INIT_AUDIO) < 0)
+	
+	if (sdlHelper.SDL__Init(SDL_INIT_AUDIO) < 0)
 	{
 		fprintf(stderr, "Couldn't initialize SDL: %s\n", SDL_GetError());
 		return(1);
 	}
 
-	soundspec.freq = callbackData.MosSid.samplerate;
-	soundspec.channels = 1;
-	soundspec.format = AUDIO_S16;
-	soundspec.samples = 16384;
-	//soundspec.userdata = NULL;
-	//soundspec.callback = play;
+	sdlHelper.soundspec.freq = callbackData.MosSid.samplerate;
+	sdlHelper.soundspec.channels = 1;
+	sdlHelper.soundspec.format = AUDIO_S16;
+	sdlHelper.soundspec.samples = 16384;
+	//sdlHelper.soundspec.userdata = NULL;
+	//sdlHelper.soundspec.callback = play;
 
 
-	soundspec.userdata = &callbackData;//&callbackObject;
-	soundspec.callback = play; // CallbackObject::forwardCallback;
+	sdlHelper.soundspec.userdata = &callbackData;//&callbackObject;
+	sdlHelper.soundspec.callback = play; // CallbackObject::forwardCallback;
 
-	if (SDL_OpenAudio(&soundspec, NULL) < 0)
+	if (sdlHelper.SDL__OpenAudio(&sdlHelper.soundspec, NULL) < 0)
 	{
-		fprintf(stderr, "Couldn't open audio: %s\n", SDL_GetError());
+		fprintf(stderr, "Couldn't open audio: %s\n", sdlHelper.SDL__GetError());
 		return(2);
 	}
 
@@ -150,15 +151,16 @@ int SidPlayer::Play()
 
 	callbackData.MosSid.cSID_init(callbackData.MosSid.samplerate);
 	init(callbackData.subtune);
-	SDL_PauseAudio(0);
+
+	sdlHelper.SDL__PauseAudio(0);
 
 	return 0;
 }
 
 int SidPlayer::Stop()
 {
-	SDL_PauseAudio(1);
-	SDL_CloseAudio();
+	sdlHelper.SDL__PauseAudio(1);
+	sdlHelper.SDL__CloseAudio();
 
 	return 0;
 }
@@ -193,7 +195,7 @@ void SidPlayer::init(int subt)
 	
 	#ifdef Print2Console
 	//printf("Frame-sampleperiod: %.0f samples  (%.1fX speed)\n", callbackData.MosSid.mos_round(callbackData.frame_sampleperiod), callbackData.MosSid.samplerate / PAL_FRAMERATE / callbackData.frame_sampleperiod);
-	sprintf(bufferMessage, "Frame-sampleperiod: %.0f samples  (%.1fX speed)\n", callbackData.MosSid.mos_round(callbackData.frame_sampleperiod), callbackData.MosSid.samplerate / PAL_FRAMERATE / callbackData.frame_sampleperiod);
+	sprintf(bufferMessage, "\nFrame-sampleperiod: %.0f samples  (%.1fX speed)\n", callbackData.MosSid.mos_round(callbackData.frame_sampleperiod), callbackData.MosSid.samplerate / PAL_FRAMERATE / callbackData.frame_sampleperiod);
 	print2Console(bufferMessage);
 	#endif
 

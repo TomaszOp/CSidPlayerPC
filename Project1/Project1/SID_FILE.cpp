@@ -209,7 +209,16 @@ int SidFile::InserFile(char* fileBuffer, unsigned int sidLength)
 	preferred_SID_model[2] = (filedata[0x76] & 3) >= 2 ? 8580 : 6581;
 	SID_address[1] = filedata[0x7A] >= 0x42 && (filedata[0x7A] < 0x80 || filedata[0x7A] >= 0xE0) ? 0xD000 + filedata[0x7A] * 16 : 0;
 	SID_address[2] = filedata[0x7B] >= 0x42 && (filedata[0x7B] < 0x80 || filedata[0x7B] >= 0xE0) ? 0xD000 + filedata[0x7B] * 16 : 0;
-	SIDamount = 1 + (SID_address[1] > 0) + (SID_address[2] > 0); if (SIDamount >= 2) printf("(SID1), %d(SID2:%4.4X)", preferred_SID_model[1], SID_address[1]);
+	SIDamount = 1 + (SID_address[1] > 0) + (SID_address[2] > 0); 
+	
+	if (SIDamount >= 2)
+	{
+		#ifdef Print2Console
+		sprintf(bufferMessage, "(SID1), %d(SID2:%4.4X)", preferred_SID_model[1], SID_address[1]);
+		print2Console(bufferMessage);
+		#endif
+	}
+
 
 	if (SIDamount == 3)
 	{
@@ -224,7 +233,8 @@ int SidFile::InserFile(char* fileBuffer, unsigned int sidLength)
 	{
 		#ifdef Print2Console
 		//printf(" (requested:%d)", requested_SID_model); printf("\n");
-		sprintf(bufferMessage, " (requested:%d)", requested_SID_model); printf("\n");
+		sprintf(bufferMessage, " (requested:%d)", requested_SID_model); 
+		printf("\n");
 		print2Console(bufferMessage);
 		#endif
 	}

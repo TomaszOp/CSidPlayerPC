@@ -5,15 +5,12 @@
 #include <stdio.h>
 #include <string>
 #include <cmath>
-#include <SDL_config.h>
-#include <SDL.h>
-#include <SDL_audio.h>
 
 #include "SID_FILE.h"
 #include "MOS_6510.h"
 #include "MOS_SID.h"
 
-
+#include "SDL_Helper.h"
 
 struct CallbackData
 {
@@ -47,7 +44,6 @@ public:
 		requested_SID_model = -1; 
 	};
 	
-
 	CallbackData(MOS_SID & ms): MosSid(ms)
 	{
 		SID_address[0] = 0xD400;
@@ -60,7 +56,6 @@ public:
 
 	MOS_SID MosSid;
 };
-
 
 class SidPlayer
 {
@@ -86,21 +81,16 @@ class SidPlayer
 
 		CallbackData callbackData{ MosSid };
 
-
-
 	private:
-		SDL_AudioSpec soundspec;
+
+		SDL_Helper sdlHelper;
+
 		void init(int subt);
 
 		int tunelength;
 		int default_tunelength;
 		int minutes;
 		int seconds;
-
-		
 };
-
-
-
 
 #endif
