@@ -71,6 +71,7 @@ class SidPlayer
 		int Stop();
 
 		static void play(void* voidCallData, Uint8 *stream, int len);
+		void play(Uint8* stream, int len);
 
 		RAM Ram;
 

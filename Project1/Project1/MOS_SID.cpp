@@ -2,6 +2,10 @@
 
 MOS_SID::MOS_SID(void)
 {
+	TriSaw_8580 = (unsigned int*)malloc(sizeof(unsigned int) * 4096);
+	PulseSaw_8580 = (unsigned int*)malloc(sizeof(unsigned int) * 4096);
+	PulseTriSaw_8580 = (unsigned int*)malloc(sizeof(unsigned int) * 4096);
+
 	int i;
 
 	float cADSRperiods[] = { PERIOD0, 32, 63, 95, 149, 220, 267, 313, 392, 977, 1954, 3126, 3907, 11720, 19532, 31251 };
@@ -24,6 +28,10 @@ MOS_SID::MOS_SID(void)
 
 MOS_SID::MOS_SID(MOS_6510 &m6):Mos6510(m6)
 {
+	TriSaw_8580 = (unsigned int*)malloc(sizeof(unsigned int) * 4096);
+	PulseSaw_8580 = (unsigned int*)malloc(sizeof(unsigned int) * 4096);
+	PulseTriSaw_8580 = (unsigned int*)malloc(sizeof(unsigned int) * 4096);
+
 	int i;
 
 	float cADSRperiods[] = { PERIOD0, 32, 63, 95, 149, 220, 267, 313, 392, 977, 1954, 3126, 3907, 11720, 19532, 31251 };

@@ -57,7 +57,11 @@ private:
 	unsigned int combinedWF(char num, char channel, unsigned int* wfarray, int index, char differ6581, byte freq);
 	void createCombinedWF(unsigned int* wfarray, float bitmul, float bitstrength, float treshold);
 	
-	unsigned int TriSaw_8580[4096], PulseSaw_8580[4096], PulseTriSaw_8580[4096];
+	unsigned int * TriSaw_8580;
+	unsigned int * PulseSaw_8580;
+	unsigned int * PulseTriSaw_8580;
+
+
 
 	float ADSRperiods[16];
 	byte ADSRstep[16];

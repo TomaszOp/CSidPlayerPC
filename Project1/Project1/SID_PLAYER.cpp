@@ -289,3 +289,8 @@ void SidPlayer::play(void* voidCallData, Uint8 *stream, int len) //called by SDL
 		stream[i + 1] = output >> 8;
 	}
 }
+
+void SidPlayer::play(Uint8* stream, int len)
+{
+	play(&callbackData, stream, len);
+}

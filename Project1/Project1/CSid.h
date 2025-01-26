@@ -16,9 +16,11 @@ public:
 	int Play();
 	int Stop();
 
+	SidPlayer sidPlayer;
+
 private:
 
-	SidPlayer sidPlayer;
+	
 };
 
 

@@ -107,7 +107,7 @@ int SidFile::InserFile(char* fileBuffer, unsigned int sidLength)
 	byte timermode[0x20], SIDtitle[0x20], SIDauthor[0x20], SIDinfo[0x20];
 	int strend;
 	int subtune_amount;
-	int preferred_SID_model[3] = { 8580.0,8580.0,8580.0 };
+	int preferred_SID_model[3] = { 8580, 8580, 8580 };
 
 	datalen = sidLength;
 

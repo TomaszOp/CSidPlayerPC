@@ -65,29 +65,91 @@ byte MOS_6510::CPU() //the CPU emulation for SID/PRG playback (ToDo: CIA/VIC-IRQ
 			addr = Ram.memory[Ram.memory[PC] + X] + Ram.memory[Ram.memory[PC] + X + 1] * 256;
 			cycles = 6;
 			break; //(zp,x)
-		case 0x11: case 0x13: PC++; addr = Ram.memory[Ram.memory[PC]] + Ram.memory[Ram.memory[PC] + 1] * 256 + Y; cycles = 6; break; //(zp),y (5..6 cycles, 8 for R-M-W)
-		case 0x19: case 0x1B: PC++; addr = Ram.memory[PC]; PC++; addr += Ram.memory[PC] * 256 + Y; cycles = 5; break; //abs,y //(4..5 cycles, 7 cycles for R-M-W)
-		case 0x1D: PC++; addr = Ram.memory[PC]; PC++; addr += Ram.memory[PC] * 256 + X; cycles = 5; break; //abs,x //(4..5 cycles, 7 cycles for R-M-W)
-		case 0xD: case 0xF: PC++; addr = Ram.memory[PC]; PC++; addr += Ram.memory[PC] * 256; cycles = 4; break; //abs
-		case 0x15: PC++; addr = Ram.memory[PC] + X; cycles = 4; break; //zp,x
-		case 5: case 7: PC++; addr = Ram.memory[PC]; cycles = 3; break; //zp
-		case 0x17: PC++; if ((IR & 0xC0) != 0x80) { addr = Ram.memory[PC] + X; cycles = 4; } //zp,x for illegal opcodes
-				 else { addr = Ram.memory[PC] + Y; cycles = 4; }  break; //zp,y for LAX/SAX illegal opcodes
-		case 0x1F: PC++; if ((IR & 0xC0) != 0x80) { addr = Ram.memory[PC] + Ram.memory[++PC] * 256 + X; cycles = 5; } //abs,x for illegal opcodes
-				 else { addr = Ram.memory[PC] + Ram.memory[++PC] * 256 + Y; cycles = 5; }  break; //abs,y for LAX/SAX illegal opcodes
-		case 9: case 0xB: PC++; addr = PC; cycles = 2;  //immediate
+		case 0x11: 
+		case 0x13: 
+			PC++; 
+			addr = Ram.memory[Ram.memory[PC]] + Ram.memory[Ram.memory[PC] + 1] * 256 + Y; 
+			cycles = 6; 
+			break; //(zp),y (5..6 cycles, 8 for R-M-W)
+		case 0x19: 
+		case 0x1B: 
+			PC++; addr = Ram.memory[PC]; PC++; 
+			addr += Ram.memory[PC] * 256 + Y; 
+			cycles = 5; 
+			break; //abs,y //(4..5 cycles, 7 cycles for R-M-W)
+		case 0x1D: 
+			PC++; addr = Ram.memory[PC]; PC++; 
+			addr += Ram.memory[PC] * 256 + X; 
+			cycles = 5; 
+			break; //abs,x //(4..5 cycles, 7 cycles for R-M-W)
+		case 0xD: 
+		case 0xF: 
+			PC++; 
+			addr = Ram.memory[PC]; 
+			PC++; addr += Ram.memory[PC] * 256; 
+			cycles = 4; 
+			break; //abs
+		case 0x15: 
+			PC++; 
+			addr = Ram.memory[PC] + X; 
+			cycles = 4; 
+			break; //zp,x
+		case 5: 
+		case 7: 
+			PC++; 
+			addr = Ram.memory[PC]; 
+			cycles = 3; 
+			break; //zp
+		case 0x17: 
+			PC++; 
+			if ((IR & 0xC0) != 0x80) 
+			{ 
+				addr = Ram.memory[PC] + X; 
+				cycles = 4; 
+			} //zp,x for illegal opcodes
+			else 
+			{ 
+				addr = Ram.memory[PC] + Y; 
+				cycles = 4; 
+			}  
+			break; //zp,y for LAX/SAX illegal opcodes
+		case 0x1F: 
+			PC++; 
+			if ((IR & 0xC0) != 0x80) 
+			{ 
+				addr = Ram.memory[PC] + Ram.memory[++PC] * 256 + X; 
+				cycles = 5; 
+			} //abs,x for illegal opcodes
+			else 
+			{ 
+				addr = Ram.memory[PC] + Ram.memory[++PC] * 256 + Y; 
+				cycles = 5; 
+			}  
+			break; //abs,y for LAX/SAX illegal opcodes
+		case 9: 
+		case 0xB: 
+			PC++; 
+			addr = PC; 
+			cycles = 2;  //immediate
 		}
 		addr &= 0xFFFF;
-		switch (IR & 0xE0) {
-		case 0x60: if ((IR & 0x1F) != 0xB) {
+		
+		switch (IR & 0xE0) 
+		{
+		case 0x60: 
+			if ((IR & 0x1F) != 0xB) 
+			{
 			if ((IR & 3) == 3) { T = (Ram.memory[addr] >> 1) + (ST & 1) * 128; ST &= 124; ST |= (T & 1); Ram.memory[addr] = T; cycles += 2; }   //ADC / RRA (ROR+ADC)
 			T = A; A += Ram.memory[addr] + (ST & 1); ST &= 60; ST |= (A & 128) | (A > 255); A &= 0xFF; ST |= (!A) << 1 | (!((T ^ Ram.memory[addr]) & 0x80) & ((T ^ A) & 0x80)) >> 1;
-		}
-				 else {
+			}
+			else 
+			{
 			A &= Ram.memory[addr]; T += Ram.memory[addr] + (ST & 1); ST &= 60; ST |= (T > 255) | (!((A ^ Ram.memory[addr]) & 0x80) & ((T ^ A) & 0x80)) >> 1; //V-flag set by intermediate ADC mechanism: (A&mem)+mem
 			T = A; A = (A >> 1) + (ST & 1) * 128; ST |= (A & 128) | (T > 127); ST |= (!A) << 1;
-		}  break; // ARR (AND+ROR, bit0 not going to C, but C and bit7 get exchanged.)
-		case 0xE0: if ((IR & 3) == 3 && (IR & 0x1F) != 0xB) { Ram.memory[addr]++; cycles += 2; }  T = A; A -= Ram.memory[addr] + !(ST & 1); //SBC / ISC(ISB)=INC+SBC
+			}  
+			break; // ARR (AND+ROR, bit0 not going to C, but C and bit7 get exchanged.)
+		case 0xE0: 
+			if ((IR & 3) == 3 && (IR & 0x1F) != 0xB) { Ram.memory[addr]++; cycles += 2; }  T = A; A -= Ram.memory[addr] + !(ST & 1); //SBC / ISC(ISB)=INC+SBC
 			ST &= 60; ST |= (A & 128) | (A >= 0); A &= 0xFF; ST |= (!A) << 1 | (((T ^ Ram.memory[addr]) & 0x80) & ((T ^ A) & 0x80)) >> 1; break;
 		case 0xC0: if ((IR & 0x1F) != 0xB) { if ((IR & 3) == 3) { Ram.memory[addr]--; cycles += 2; }  T = A - Ram.memory[addr]; } // CMP / DCP(DEC+CMP)
 				 else { X = T = (A & X) - Ram.memory[addr]; }   ST &= 124; ST |= (!(T & 0xFF)) << 1 | (T & 128) | (T >= 0);  break;  //SBX (AXS) (CMP+DEX at the same time)
@@ -226,12 +288,34 @@ byte MOS_6510::CPU() //the CPU emulation for SID/PRG playback (ToDo: CIA/VIC-IRQ
 			}
 		}
 		else {  //nybble2:  0:Y/control/Y/compare  4:Y/compare  C:Y/compare/JMP
-			switch (IR & 0x1F) { //addressing modes
-			case 0: PC++; addr = PC; cycles = 2; break; //imm. (or abs.low for JSR/BRK)
-			case 0x1C: PC++; addr = Ram.memory[PC]; PC++; addr += Ram.memory[PC] * 256 + X; cycles = 5; break; //abs,x
-			case 0xC: PC++; addr = Ram.memory[PC]; PC++; addr += Ram.memory[PC] * 256; cycles = 4; break; //abs
-			case 0x14: PC++; addr = Ram.memory[PC] + X; cycles = 4; break; //zp,x
-			case 4: PC++; addr = Ram.memory[PC]; cycles = 3;  //zp
+			switch (IR & 0x1F) 
+			{ //addressing modes
+			case 0: 
+				PC++; 
+				addr = PC; 
+				cycles = 2; 
+				break; //imm. (or abs.low for JSR/BRK)
+			case 0x1C: 
+				PC++; 
+				addr = Ram.memory[PC]; PC++; 
+				addr += Ram.memory[PC] * 256 + X; 
+				cycles = 5; 
+				break; //abs,x
+			case 0xC: 
+				PC++; 
+				addr = Ram.memory[PC]; 
+				PC++; addr += Ram.memory[PC] * 256; 
+				cycles = 4; 
+				break; //abs
+			case 0x14: 
+				PC++; 
+				addr = Ram.memory[PC] + X; 
+				cycles = 4; 
+				break; //zp,x
+			case 4: 
+				PC++; 
+				addr = Ram.memory[PC]; 
+				cycles = 3;  //zp
 			}
 			addr &= 0xFFFF;
 			switch (IR & 0xE0) {
