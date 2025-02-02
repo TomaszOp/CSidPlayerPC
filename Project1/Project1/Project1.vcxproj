@@ -56,7 +56,7 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
-  <ImportGroup  Label="Shared">
+  <ImportGroup Label="Shared">
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -148,16 +148,9 @@
     <ClCompile Include="Tools.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="audio\arkanoid.h" />
-    <ClInclude Include="audio\comic.h" />
-    <ClInclude Include="audio\commando.h" />
-    <ClInclude Include="audio\ik.h" />
-    <ClInclude Include="audio\mikie.h" />
-    <ClInclude Include="audio\ocean.h" />
-    <ClInclude Include="audio\rambo.h" />
-    <ClInclude Include="audio\wizball.h" />
-    <ClInclude Include="audio\yie.h" />
+    <ClInclude Include="audio\test_sid.h" />
     <ClInclude Include="CSid.h" />
+    <ClInclude Include="Data_Saw_8580.h" />
     <ClInclude Include="MOS_6510.h" />
     <ClInclude Include="MOS_SID.h" />
     <ClInclude Include="RAM.h" />

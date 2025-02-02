@@ -65,34 +65,13 @@
     <ClInclude Include="CSid.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="audio\arkanoid.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="audio\comic.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="audio\commando.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="audio\ik.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="audio\mikie.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="audio\ocean.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="audio\rambo.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="audio\wizball.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="audio\yie.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="SDL_Helper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Data_Saw_8580.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="audio\test_sid.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,6 +1,6 @@
 #include "CSid.h"
 //#include "audio/arkanoid.h"
-#include "audio/commando.h"
+#include "audio/test_sid.h"
 
 int main(int argc, char* argv[])
 {
@@ -9,9 +9,9 @@ int main(int argc, char* argv[])
 	char filePath[] = "test.sid";
 
 	CSid.Init();
-	CSid.LoadFile(filePath);
+	//CSid.LoadFile(filePath);
 
-	//CSid.InserFile(music_Commando_sid, music_Commando_sid_len);
+	CSid.InserFile(test_sid, test_sid_len);
 
 	CSid.Play();
 
